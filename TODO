@@ -1,0 +1,11 @@
+* Fix the spacing issues that exist as a result of Google collapsing DIV's.
+  There is an issue if you write {{variable1}} {{variable2}}
+  you get {{variable1}}{{variable2}} - i've written up a spec for this
+
+* Chunking for large sets - I've written up a spec for this
+
+* Split out other classes
+
+* Fix existing TODOs
+
+* Add tests that contain <div>s to easy_translate
