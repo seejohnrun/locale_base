@@ -9,3 +9,5 @@
 * Fix existing TODOs
 
 * Add tests that contain <div>s to easy_translate
+
+* Plus issue (i've written up a failing spec for this)
