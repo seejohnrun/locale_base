@@ -5,6 +5,9 @@ module LocaleBase
   
   require 'rubygems'
   require 'easy_translate'
+
+  require 'locale_base/tracking_token'
+  require 'locale_base/translation_tracker'
   
   require 'locale_base/translator'
       
