@@ -1,4 +1,4 @@
-require 'lib/locale_base/version'
+require File.dirname(__FILE__) + '/lib/locale_base/version'
 
 spec = Gem::Specification.new do |s|
   

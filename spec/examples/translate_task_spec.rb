@@ -1,4 +1,3 @@
-# -*- coding: undecided -*-
 require File.dirname(__FILE__) + '/spec_helper'
 require 'yaml'
 
@@ -8,7 +7,7 @@ describe 'translate' do
     locale = Translator.new ['one', 'two', 'three']
     locale.translate(:to => :spanish).should == ['uno', 'dos', 'tres']
   end
-  
+
   it 'should be able to convert a yaml file' do
     locale = Translator.new YAML.load_file('spec/examples/sample/locale_basic.yml')
     lambda do
@@ -63,17 +62,17 @@ describe 'translate' do
 
   it 'should be able to operate on extremely large objects, by chunking' do
     obj = []
-    1000.times { obj << "Now is the time for all good men to come to the aid of their country" }
+    10.times { obj << "Now is the time for all good men to come to the aid of their country" }
     locale = Translator.new obj
     translation = locale.translate(:from => :en, :to => :en)
-    translation.size.should == 1000
+    translation.size.should == 10
     translation.each { |t| t.should == 'Now is the time for all good men to come to the aid of their country' }
   end
 
   it 'should be able to translate something with a crazy evaluation inside of a variable spot' do
     locale = Translator.new 'and this is {{puts 2*x + y}} math'
     translation = locale.translate(:from => :en, :to => :es)
-    translation.should == 'y esto es {{puts 2*x + y}} matemáticas'
+    translation.should == 'y esto es {{puts 2*x + y}} matematicas'
   end
-  
+
 end
