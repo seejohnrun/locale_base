@@ -25,7 +25,7 @@ Arrays are translated directly
 When hashes are translated, keys are left alone
 
     locale = LocaleBase::Translator.new { 'first' => ['one', 'two', 'three'] }
-		locale.translate(:to => :spanish) # { 'first' => ['uno', 'dos', 'tres'] }
+    locale.translate(:to => :spanish) # { 'first' => ['uno', 'dos', 'tres'] }
 
 Also, escapes are obeyed all throughout, so you can do:
 
@@ -45,24 +45,26 @@ Translating YAML is easy because its just a nested structure
 
 ---
 
-### Known Issues
+## Known Issues
 
 * putting two {{}} blocks right next two each other will result in a space in-between due to the way that Google Translate handles .notranslate blocks - This will hopefully be fixed soon but shouldn't get in your way.
 
-### Coming soon
+---
+
+## Coming soon
 
 * A lightweight CLI for translating YAML / JSON files from the command line
 * Support for larger files (chunking)
 
 --- 
 
-### Author
+## Author
 
 * John Crepezzi - john.crepezzi@gmail.com
 
 ---
 
-### License
+## License
 
 (The MIT License)
 
