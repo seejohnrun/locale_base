@@ -10,41 +10,39 @@ module LocaleBase
       @original = hash
     end
 
+    # place track tokens
+    # translate all of them
+    # and then replace the tokens with their string equivelants
     def translate(options = {})
 
       tracker = TranslationTracker.new
       
-      # place track tokens
-      # translate all of them
-      # and then replace the tokens with their string equivelants
-      # this is inefficient, but we can't make in place edits
-      # so i'm not sure if there's a better way (TODO think of a better way)
-
       # we use divs here instead of spans so that google doesn't mess us up
       # by combining spans on requests
       @created = crazy_walk(@original) do |obj|
         obj.gsub!(/\{\{([^\}]+)\}\}/) do |m|
-          "<div class='notranslate'>#{URI.escape($1)}</div>"
+          "<div class='notranslate'>#{tracker.hold($1)}</div>"
         end
         # insert trackers
         tracker.track(obj)
       end
 
+      # translate everything
       tracker.translate_all(options)
       
-      # TODO everything is okay up until this point, and then the
-      # spacing gets all mucky - might be with the regex, or might be the replacement
-      # stripping
+      # replace the tokens with the tranlated text
       @created = crazy_walk(@created) do |obj|
         obj = tracker.retrieve(obj) if obj.is_a?(TrackingToken)
-        # remove spans
+        # remove divs and replace with hold text - don't let google near this stuff
         # whitespace split also needed cause google messess with our shit
+        obj.gsub!('><', '> <')
         obj.gsub!(/<div\sclass='notranslate'>([^<]+)<\/div>/) do |m|
-          "{{#{URI.unescape($1)}}}"
+          "{{#{tracker.unhold($1)}}}"
         end
+        
         obj
       end
-      
+
     end
 
     private
