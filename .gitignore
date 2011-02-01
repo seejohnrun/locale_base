@@ -1,3 +1,6 @@
 *swp
 *.bundle
 Gemfile.lock
+*.gem
+*.swp
+*.swo
