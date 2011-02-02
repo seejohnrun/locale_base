@@ -11,7 +11,8 @@ describe 'translate' do
   it 'should be able to convert a yaml file' do
     locale = LocaleBase::Translator.new YAML.load_file('spec/examples/sample/locale_basic.yml')
     lambda do
-      locale.translate(:to => :spanish)
+      trans = locale.translate(:to => :spanish)
+      trans.should == { 'dogs' => 'perros', 'cats' => 'gatos', 'more' => { 'fish' => 'peces', 'human' => 'humanos', 'other' => ['calle {{door}}', 'por'] } }
     end.should_not raise_error
   end
 
@@ -74,6 +75,11 @@ describe 'translate' do
     locale = LocaleBase::Translator.new 'and this is {{puts 2*x + y}} math'
     translation = locale.translate(:from => :en, :to => :es)
     translation.should == 'y esto es {{puts 2*x + y}} matemáticas'
+  end
+
+  it 'should be able to handle tracking variables in an array' do
+    locale = LocaleBase::Translator.new 'details' => { 'copy' => 'Copyright © {{year}} {{company}}. All Rights Reserved.' }
+    locale.translate(:to => :spanish).should == { 'details' => { 'copy' => 'Copyright © {{year}} {{company}}. Todos los derechos reservados.' } }
   end
 
 end

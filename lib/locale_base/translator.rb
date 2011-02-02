@@ -36,6 +36,7 @@ module LocaleBase
         # remove divs and replace with hold text - don't let google near this stuff
         # whitespace split also needed cause google messess with our shit
         obj.gsub!('><', '> <')
+        obj.gsub!('> .', '>.')
         obj.gsub!(/<div\sclass='notranslate'>([^<]+)<\/div>/) do |m|
           "{{#{tracker.unhold($1)}}}"
         end
