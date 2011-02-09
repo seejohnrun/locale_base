@@ -1,5 +1,5 @@
 require 'spec/rake/spectask'
-require 'lib/locale_base/version'
+require File.dirname(__FILE__) + '/lib/locale_base/version'
  
 task :build => :test do
   system "gem build locale_base.gemspec"

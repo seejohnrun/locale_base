@@ -5,5 +5,5 @@ more:
   fish: fish
   human: human
   other:
-    - street {{door}}
+    - street %{door}
     - door

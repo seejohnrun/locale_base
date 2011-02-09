@@ -14,7 +14,7 @@ describe 'translate' do
     locale = LocaleBase::Translator.new YAML.load_file('spec/examples/sample/locale_basic.yml')
     lambda do
       trans = locale.translate(:to => :spanish)
-      trans.should == { 'dogs' => 'perros', 'cats' => 'gatos', 'more' => { 'fish' => 'peces', 'human' => 'humanos', 'other' => ['calle {{door}}', 'por'] } }
+      trans.should == { 'dogs' => 'perros', 'cats' => 'gatos', 'more' => { 'fish' => 'peces', 'human' => 'humanos', 'other' => ['calle %{door}', 'por'] } }
     end.should_not raise_error
   end
 
@@ -33,29 +33,29 @@ describe 'translate' do
     locale.translate(:from => :en, :to => :es).should == { 'numbers' => { 'singles' => ['uno', 'dos'], 'teens' => ['diez', 'quince'] } }
   end
 
-  it 'should be able to work with {{variables}} without modifying them' do
-    locale = LocaleBase::Translator.new 'one {{variable}} two'
-    locale.translate(:from => :en, :to => :es).should == 'uno {{variable}} dos'
+  it 'should be able to work with %{variables} without modifying them' do
+    locale = LocaleBase::Translator.new 'one %{variable} two'
+    locale.translate(:from => :en, :to => :es).should == 'uno %{variable} dos'
   end
 
   it 'should be able to deal with multiple variables without confusing them' do
-    locale = LocaleBase::Translator.new 'one {{var1}} two {{var2}} three'
-    locale.translate(:from => :en, :to => :es).should == 'uno {{var1}} dos {{var2}} tres'
+    locale = LocaleBase::Translator.new 'one %{var1} two %{var2} three'
+    locale.translate(:from => :en, :to => :es).should == 'uno %{var1} dos %{var2} tres'
   end
 
   it 'should be able to deal with multiple variables with non-alphanum chars' do
-    locale = LocaleBase::Translator.new 'one {{:var_1}} two {{:var_2}} three'
-    locale.translate(:from => :en, :to => :es).should == 'uno {{:var_1}} dos {{:var_2}} tres'
+    locale = LocaleBase::Translator.new 'one %{:var_1} two %{:var_2} three'
+    locale.translate(:from => :en, :to => :es).should == 'uno %{:var_1} dos %{:var_2} tres'
   end
 
   it 'should be able to have two of the same variable in a string' do
-    locale = LocaleBase::Translator.new 'one {{variable}} one {{variable}} two'
-    locale.translate(:from => :en, :to => :es).should == 'uno {{variable}} uno {{variable}} dos'
+    locale = LocaleBase::Translator.new 'one %{variable} one %{variable} two'
+    locale.translate(:from => :en, :to => :es).should == 'uno %{variable} uno %{variable} dos'
   end
 
   it 'should be able to have two variables separated by a space' do
-    locale = LocaleBase::Translator.new 'one {{variable1}} {{variable2}} two'
-    locale.translate(:from => :en, :to => :es).should == 'uno {{variable1}} {{variable2}} dos'
+    locale = LocaleBase::Translator.new 'one %{variable1} %{variable2} two'
+    locale.translate(:from => :en, :to => :es).should == 'uno %{variable1} %{variable2} dos'
   end
 
   # waiting on google for this one
@@ -74,14 +74,14 @@ describe 'translate' do
   end
 
   it 'should be able to translate something with a crazy evaluation inside of a variable spot' do
-    locale = LocaleBase::Translator.new 'and this is {{puts 2*x + y}} math'
+    locale = LocaleBase::Translator.new 'and this is %{puts 2*x + y} math'
     translation = locale.translate(:from => :en, :to => :es)
-    translation.should == 'y esto es {{puts 2*x + y}} matemáticas'
+    translation.should == 'y esto es %{puts 2*x + y} matemáticas'
   end
 
   it 'should be able to handle tracking variables in an array' do
-    locale = LocaleBase::Translator.new 'details' => { 'copy' => 'Copyright © {{year}} {{company}}. All Rights Reserved.' }
-    locale.translate(:to => :spanish).should == { 'details' => { 'copy' => 'Copyright © {{year}} {{company}}. Todos los derechos reservados.' } }
+    locale = LocaleBase::Translator.new 'details' => { 'copy' => 'Copyright © %{year} %{company}. All Rights Reserved.' }
+    locale.translate(:to => :spanish).should == { 'details' => { 'copy' => 'Copyright © %{year} %{company}. Todos los derechos reservados.' } }
   end
 
 end

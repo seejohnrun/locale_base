@@ -20,7 +20,7 @@ module LocaleBase
       # we use divs here instead of spans so that google doesn't mess us up
       # by combining spans on requests
       @created = crazy_walk(@original) do |obj|
-        obj.gsub!(/\{\{([^\}]+)\}\}/) do |m|
+        obj.gsub!(/%\{([^\}]+)\}/) do |m|
           "<div class='notranslate'>#{tracker.hold($1)}</div>"
         end
         # insert trackers
@@ -38,7 +38,7 @@ module LocaleBase
         obj.gsub!('><', '> <')
         obj.gsub!('> .', '>.')
         obj.gsub!(/<div\sclass='notranslate'>([^<]+)<\/div>/) do |m|
-          "{{#{tracker.unhold($1)}}}"
+          "%{#{tracker.unhold($1)}}"
         end
         
         obj

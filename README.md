@@ -29,8 +29,8 @@ When hashes are translated, keys are left alone
 
 Also, escapes are obeyed all throughout, so you can do:
 
-    locale = LocaleBase::Translator.new { 'first' => 'hello {{2x * y}}' }
-    locale.translate(:to => :spanish) # { 'first' => 'hola {{2x * y}}' }
+    locale = LocaleBase::Translator.new { 'first' => 'hello %{2x * y}' }
+    locale.translate(:to => :spanish) # { 'first' => 'hola %{2x * y}' }
 
 ### Any nested Hash / Array mix
 
