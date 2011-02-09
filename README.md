@@ -47,7 +47,7 @@ Translating YAML is easy because its just a nested structure
 
 ## Known Issues
 
-* putting two {{}} blocks right next two each other will result in a space in-between due to the way that Google Translate handles .notranslate blocks - This will hopefully be fixed soon but shouldn't get in your way.
+* putting two %{} blocks right next two each other will result in a space in-between due to the way that Google Translate handles .notranslate blocks - This will hopefully be fixed soon but shouldn't get in your way.
 
 ---
 
